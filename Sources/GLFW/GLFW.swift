@@ -18,6 +18,10 @@ public struct GLFW {
         }
     }
     
+    public static func terminate() {
+        glfwTerminate()
+    }
+    
     public static func pollEvents() {
         glfwPollEvents()
     }
