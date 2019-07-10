@@ -62,3 +62,13 @@ fileprivate class ErrorHandler {
         }
     }
 }
+
+extension Bool {
+    func glfwBool() -> Int32 {
+        if self {
+            return GLFW_TRUE
+        } else {
+            return GLFW_FALSE
+        }
+    }
+}
