@@ -40,4 +40,8 @@ public class Window {
     public init() {
         window = glfwCreateWindow(800, 600, "Bob", nil, nil)
     }
+    
+    deinit {
+        glfwDestroyWindow(window)
+    }
 }
