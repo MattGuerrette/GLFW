@@ -34,7 +34,7 @@ public class Window {
     }
     
     /// Initializes a window
-    public init(hints: [()]) {
+    public init() {
         window = glfwCreateWindow(800, 600, "Bob", nil, nil)
     }
     
