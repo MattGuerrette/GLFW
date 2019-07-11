@@ -10,46 +10,53 @@ import cglfw
 
 public class Window {
     
-    private var window : OpaquePointer?
+    private var opaque : OpaquePointer?
+
+    public var cursor : Cursor? {
+        didSet {
+            glfwSetCursor(opaque, cursor!.opaque)
+        }
+    }
     
     /// Flag for determining if window should be closing
     public var shouldClose : Bool {
         get {
-            guard window != nil else {
+            guard opaque != nil else {
                 fatalError("Window uninitialized")
             }
             
-            return glfwWindowShouldClose(window) == GLFW_TRUE
+            return glfwWindowShouldClose(opaque) == GLFW_TRUE
         }
     }
     
     /// Shows the window
     public func show() {
-        glfwShowWindow(window)
+        glfwShowWindow(opaque)
     }
     
     /// Hides the window
     public func hide() {
-        glfwHideWindow(window)
+        glfwHideWindow(opaque)
     }
     
     /// Initializes a window
     public init() {
-        window = glfwCreateWindow(800, 600, "Bob", nil, nil)
+        opaque = glfwCreateWindow(800, 600, "Bob", nil, nil)
     }
     
     deinit {
-        glfwDestroyWindow(window)
+        glfwDestroyWindow(opaque)
     }
     
     // Window Attributes
+
     
     public var focused : Bool {
         get {
-            return glfwGetWindowAttrib(window, WindowAttribute.focused.rawValue) == GLFW_TRUE
+            return glfwGetWindowAttrib(opaque, WindowAttribute.focused.rawValue) == GLFW_TRUE
         }
         set {
-            glfwSetWindowAttrib(window, GLFW_FOCUSED, newValue.glfwBool())
+            glfwSetWindowAttrib(opaque, GLFW_FOCUSED, newValue.glfwBool())
         }
     }
 }
