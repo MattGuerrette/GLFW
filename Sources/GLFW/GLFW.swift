@@ -2,8 +2,15 @@ import cglfw
 
 public struct GLFW {
     
-    public enum Keys : Int {
-        
+    public enum Action : Int {
+        case unknown = -1
+        case released = 0
+        case pressed = 1
+        case repeated = 2
+    }
+    
+    public enum Key : Int {
+        case unknown = 0
         case space = 32
         case apostrophe = 39
         case comma = 44
