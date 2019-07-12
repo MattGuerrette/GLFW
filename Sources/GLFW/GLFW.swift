@@ -2,8 +2,58 @@ import cglfw
 
 public struct GLFW {
     
-    public enum WindowHint : Int32 {
-        case clientApi = 0x00022001
+    public enum Keys : Int {
+        
+        case space = 32
+        case apostrophe = 39
+        case comma = 44
+        case minus = 45
+        case period = 46
+        case slash = 47
+        case k0 = 48
+        case k1 = 49
+        case k2 = 50
+        case k3 = 51
+        case k4 = 52
+        case k5 = 53
+        case k6 = 54
+        case k7 = 55
+        case k8 = 56
+        case k9 = 57
+        case semicolon = 59
+        case equal = 61
+        case A = 65
+        case B = 66
+        case C = 67
+        case D = 68
+        case E = 69
+        case F = 70
+        case G = 71
+        case H = 72
+        case I = 73
+        case J = 74
+        case K = 75
+        case L = 76
+        case M = 77
+        case N = 78
+        case O = 79
+        case P = 80
+        case Q = 81
+        case R = 82
+        case S = 83
+        case T = 84
+        case U = 85
+        case V = 86
+        case W = 87
+        case X = 88
+        case Y = 89
+        case Z = 90
+        case leftBracket = 91
+        case backslash = 92
+        case rightBracket = 93
+        case graveAccent = 96
+        case world1 = 161
+        case world2 = 162
     }
     
     public static var version : String = {
