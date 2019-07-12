@@ -20,6 +20,26 @@ public class Window {
         }
     }
     
+    public var width : Int {
+        get {
+            var w : Int32 = 0
+            var h : Int32 = 0
+            glfwGetWindowSize(opaque, &w, &h)
+            
+            return Int(w)
+        }
+    }
+    
+    public var height : Int {
+        get {
+            var w : Int32 = 0
+            var h : Int32 = 0
+            glfwGetWindowSize(opaque, &w, &h)
+            
+            return Int(h)
+        }
+    }
+    
     /// Flag for determining if window should be closing
     public var shouldClose : Bool {
         get {
