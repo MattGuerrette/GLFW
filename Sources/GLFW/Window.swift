@@ -10,7 +10,7 @@ import cglfw
 
 public class Window {
     
-    private var opaque : OpaquePointer?
+    var opaque : OpaquePointer?
 
     public var cursor : Cursor? {
         didSet {
@@ -42,6 +42,14 @@ public class Window {
     /// Initializes a window
     public init() {
         opaque = glfwCreateWindow(800, 600, "Bob", nil, nil)
+    }
+    
+    init(opaque : OpaquePointer?) {
+        self.opaque = opaque
+    }
+    
+    public init(monitor : Monitor) {
+        opaque = glfwCreateWindow(800, 600, "Bob", monitor.opaque, nil)
     }
     
     deinit {

@@ -10,15 +10,15 @@ import cglfw
 
 public class Monitor {
     
-    private var monitor : OpaquePointer?
+    let opaque : OpaquePointer?
     
     public var name : String {
         get {
-            guard monitor != nil else {
+            guard opaque != nil else {
                 fatalError("Monitor not initialized")
             }
             
-            return String.init(cString: glfwGetMonitorName(monitor))
+            return String.init(cString: glfwGetMonitorName(opaque))
         }
     }
     
@@ -26,7 +26,7 @@ public class Monitor {
        return Monitor(glfwGetPrimaryMonitor())
     }()
     
-    init(_ monitor: OpaquePointer?) {
-        self.monitor = monitor
+    init(_ opaque: OpaquePointer?) {
+        self.opaque = opaque
     }
 }
