@@ -40,6 +40,26 @@ public class Window {
         }
     }
     
+    public var frameWidth : Int {
+        get {
+            var w : Int32 = 0
+            var h : Int32 = 0
+            glfwGetFramebufferSize(opaque, &w, &h)
+            
+            return Int(w)
+        }
+    }
+    
+    public var frameHeight : Int {
+        get {
+            var w : Int32 = 0
+            var h : Int32 = 0
+            glfwGetFramebufferSize(opaque, &w, &h)
+            
+            return Int(h)
+        }
+    }
+    
     /// Flag for determining if window should be closing
     public var shouldClose : Bool {
         get {
