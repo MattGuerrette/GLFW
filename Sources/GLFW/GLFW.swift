@@ -9,8 +9,18 @@ public struct GLFW {
         case repeated = 2
     }
     
+    public enum Modifier : Int {
+        case none = 0
+        case shift = 0x0001
+        case control = 0x0002
+        case alt = 0x0004
+        case `super` = 0x0008
+        case capsLock = 0x0010
+        case numLock = 0x0020
+    }
+    
     public enum Key : Int {
-        case unknown = 0
+        case unknown = -1
         case space = 32
         case apostrophe = 39
         case comma = 44

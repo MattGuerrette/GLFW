@@ -12,7 +12,7 @@ public class Window {
     
     var opaque : OpaquePointer?
     
-    var keyCallback : ((Window, GLFW.Key, Int, GLFW.Action, Int) -> ())?
+    var keyCallback : ((Window, GLFW.Key, Int, GLFW.Action, GLFW.Modifier) -> ())?
 
     public var cursor : Cursor? {
         didSet {
@@ -78,7 +78,7 @@ public class Window {
     
     /// Sets keyboard input handling callback for this window
     /// - Parameter completion: callback handler
-    public func setKeyCallback(completion: @escaping (_ window : Window, _ key : GLFW.Key, _ scancode : Int, _ action : GLFW.Action, _ mods : Int) -> ()) {
+    public func setKeyCallback(completion: @escaping (_ window : Window, _ key : GLFW.Key, _ scancode : Int, _ action : GLFW.Action, _ mods : GLFW.Modifier) -> ()) {
         
         self.keyCallback = completion
         
@@ -94,7 +94,7 @@ public class Window {
             //and call user callback
             let window = Unmanaged<Window>.fromOpaque(userPointer).takeUnretainedValue()
             
-            window.keyCallback!(window, GLFW.Key(rawValue: Int(key)) ?? .unknown, Int(scancode), GLFW.Action(rawValue: Int(action)) ?? .unknown, Int(mods))
+            window.keyCallback!(window, GLFW.Key(rawValue: Int(key)) ?? .unknown, Int(scancode), GLFW.Action(rawValue: Int(action)) ?? .unknown, GLFW.Modifier(rawValue: Int(mods)) ?? .none)
         })
     }
     
