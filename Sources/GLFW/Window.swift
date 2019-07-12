@@ -41,12 +41,23 @@ public class Window {
         glfwHideWindow(opaque)
     }
     
+    public func close() {
+        glfwSetWindowShouldClose(opaque, true.int32Value())
+    }
+    
     /// Initializes a window
     /// - Parameter title: window title
     /// - Parameter width: window width in pixels
     /// - Parameter height: window height in pixels
     /// - Parameter monitor: primary monitor for window. For fullscreen window creation
-    public init(_ title : String, _ width : Int, _ height : Int, monitor : Monitor? = nil) {
+    public init(_ title : String, _ width : Int, _ height : Int, monitor : Monitor? = nil, hints : [Int32]? = nil) {
+        
+        if hints != nil {
+            for val in hints! {
+                glfwWindowHint(val, true.int32Value())
+            }
+        }
+        
         opaque = glfwCreateWindow(Int32(width), Int32(height), "Bob", monitor?.opaque, nil)
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
@@ -60,6 +71,7 @@ public class Window {
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
     }
     
+    /// Deinitialize and destroy window
     deinit {
         glfwDestroyWindow(opaque)
     }
@@ -92,7 +104,7 @@ public class Window {
             return glfwGetWindowAttrib(opaque, WindowAttribute.focused.rawValue) == GLFW_TRUE
         }
         set {
-            glfwSetWindowAttrib(opaque, GLFW_FOCUSED, newValue.glfwBool())
+            glfwSetWindowAttrib(opaque, GLFW_FOCUSED, newValue.int32Value())
         }
     }
 }

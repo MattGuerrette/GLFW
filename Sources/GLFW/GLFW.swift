@@ -64,11 +64,11 @@ fileprivate class ErrorHandler {
 }
 
 extension Bool {
-    func glfwBool() -> Int32 {
+    func int32Value() -> Int32 {
         if self {
-            return GLFW_TRUE
+            return 1
         } else {
-            return GLFW_FALSE
+            return 0
         }
     }
 }
