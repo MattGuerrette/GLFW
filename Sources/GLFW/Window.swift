@@ -42,44 +42,51 @@ public class Window {
     }
     
     /// Initializes a window
-    public init() {
-        opaque = glfwCreateWindow(800, 600, "Bob", nil, nil)
+    /// - Parameter title: window title
+    /// - Parameter width: window width in pixels
+    /// - Parameter height: window height in pixels
+    /// - Parameter monitor: primary monitor for window. For fullscreen window creation
+    public init(_ title : String, _ width : Int, _ height : Int, monitor : Monitor? = nil) {
+        opaque = glfwCreateWindow(Int32(width), Int32(height), "Bob", monitor?.opaque, nil)
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
     }
     
+    /// Initializes a window from opaque GLFW type
+    /// - Parameter opaque: opaque GLFW window handle
     init(opaque : OpaquePointer?) {
         self.opaque = opaque
-    }
-    
-    public init(monitor : Monitor) {
-        opaque = glfwCreateWindow(800, 600, "Bob", monitor.opaque, nil)
+        
+        glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
     }
     
     deinit {
         glfwDestroyWindow(opaque)
     }
     
+    /// Sets keyboard input handling callback for this window
+    /// - Parameter completion: callback handler
     public func setKeyCallback(completion: @escaping (_ window : Window, _ key : Int, _ scancode : Int, _ action : Int, _ mods : Int) -> ()) {
         
         self.keyCallback = completion
         
         // Register C callback closure
         glfwSetKeyCallback(opaque, { (win, key, scancode, action, mods) in
+            
+            //Access 'self' registed as user pointer with opaque GLFW window
             guard let userPointer = glfwGetWindowUserPointer(win) else {
                 return
             }
             
+            //Convert 'Window' class type back from opqeue type
+            //and call user callback
             let window = Unmanaged<Window>.fromOpaque(userPointer).takeUnretainedValue()
             
             window.keyCallback!(window, Int(key), Int(scancode), Int(action), Int(mods))
-//            KeyHandler.keyHandler(win, key, scancode, action, mods)
         })
     }
     
     // Window Attributes
-
-    
     public var focused : Bool {
         get {
             return glfwGetWindowAttrib(opaque, WindowAttribute.focused.rawValue) == GLFW_TRUE

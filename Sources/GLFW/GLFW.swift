@@ -35,17 +35,6 @@ public struct GLFW {
             ErrorHandler.errorHandler(error, description)
         }
     }
-    
-//    public static func setKeyCallback(window: Window, completion: @escaping (_ window : Window, _ key : Int, _ scancode : Int, _ action : Int, _ mods : Int) -> ()) {
-//        
-//        // Store user specified handler in global
-//        KeyHandler.shared().handler = completion
-//        
-//        // Register C callback closure
-//        glfwSetKeyCallback(window.opaque, { (win, key, scancode, action, mods) in
-//                KeyHandler.keyHandler(win, key, scancode, action, mods)
-//        })
-//    }
 }
 
 
@@ -73,31 +62,6 @@ fileprivate class ErrorHandler {
         }
     }
 }
-
-//fileprivate class KeyHandler {
-//    private static var sharedHandler : KeyHandler = {
-//        let handler = KeyHandler()
-//        return handler
-//    }()
-//
-//    var handler : ((Window, Int, Int, Int, Int) -> ())?
-//
-//    class func shared() -> KeyHandler {
-//        return sharedHandler
-//    }
-//
-//    class func keyHandler(_ window : OpaquePointer?,
-//                          _ key : Int32,
-//                          _ scancode : Int32,
-//                          _ action : Int32,
-//                          _ mods : Int32) {
-//        guard let handler = KeyHandler.shared().handler else {
-//            return
-//        }
-//
-//        handler(Window(opaque: window), Int(key), Int(scancode), Int(action), Int(mods))
-//    }
-//}
 
 extension Bool {
     func glfwBool() -> Int32 {
