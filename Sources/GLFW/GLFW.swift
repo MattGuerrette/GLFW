@@ -16,13 +16,13 @@ public struct GLFW {
             self.rawValue = rawValue
         }
         
-        static let none = Modifier(rawValue: 0)
-        static let shift = Modifier(rawValue: 0x0001)
-        static let control = Modifier(rawValue: 0x0002)
-        static let alt = Modifier(rawValue: 0x0004)
-        static let `super` = Modifier(rawValue: 0x0008)
-        static let capsLock = Modifier(rawValue: 0x0010)
-        static let numLock = Modifier(rawValue: 0x0020)
+        public static let none = Modifier(rawValue: 0)
+        public static let shift = Modifier(rawValue: 0x0001)
+        public static let control = Modifier(rawValue: 0x0002)
+        public static let alt = Modifier(rawValue: 0x0004)
+        public static let `super` = Modifier(rawValue: 0x0008)
+        public static let capsLock = Modifier(rawValue: 0x0010)
+        public static let numLock = Modifier(rawValue: 0x0020)
     }
     
     public enum Key : Int {
