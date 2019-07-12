@@ -58,7 +58,7 @@ public class Window {
             }
         }
         
-        opaque = glfwCreateWindow(Int32(width), Int32(height), "Bob", monitor?.opaque, nil)
+        opaque = glfwCreateWindow(Int32(width), Int32(height), title, monitor?.opaque, nil)
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
     }
