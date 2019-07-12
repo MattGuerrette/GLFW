@@ -2,7 +2,7 @@ import cglfw
 
 public struct GLFW {
     
-    enum WindowHint : Int32 {
+    public enum WindowHint : Int32 {
         case clientApi = 0x00022001
     }
     
