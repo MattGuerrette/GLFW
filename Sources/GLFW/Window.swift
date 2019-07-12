@@ -69,7 +69,7 @@ public class Window {
 
         
         opaque = glfwCreateWindow(Int32(width), Int32(height), title, monitor?.opaque, nil)
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(opaque);
         glfwSwapInterval(1);
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
