@@ -11,6 +11,8 @@ import cglfw
 public class Window {
     
     var opaque : OpaquePointer?
+    
+    var keyCallback : ((Window, Int, Int, Int, Int) -> ())?
 
     public var cursor : Cursor? {
         didSet {
@@ -42,6 +44,8 @@ public class Window {
     /// Initializes a window
     public init() {
         opaque = glfwCreateWindow(800, 600, "Bob", nil, nil)
+        
+        glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
     }
     
     init(opaque : OpaquePointer?) {
@@ -54,6 +58,23 @@ public class Window {
     
     deinit {
         glfwDestroyWindow(opaque)
+    }
+    
+    public func setKeyCallback(completion: @escaping (_ window : Window, _ key : Int, _ scancode : Int, _ action : Int, _ mods : Int) -> ()) {
+        
+        self.keyCallback = completion
+        
+        // Register C callback closure
+        glfwSetKeyCallback(opaque, { (win, key, scancode, action, mods) in
+            guard let userPointer = glfwGetWindowUserPointer(win) else {
+                return
+            }
+            
+            let window = Unmanaged<Window>.fromOpaque(userPointer).takeUnretainedValue()
+            
+            window.keyCallback!(window, Int(key), Int(scancode), Int(action), Int(mods))
+//            KeyHandler.keyHandler(win, key, scancode, action, mods)
+        })
     }
     
     // Window Attributes
