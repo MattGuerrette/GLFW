@@ -94,7 +94,7 @@ public class Window {
             //and call user callback
             let window = Unmanaged<Window>.fromOpaque(userPointer).takeUnretainedValue()
             
-            window.keyCallback!(window, GLFW.Key(rawValue: Int(key)) ?? .unknown, Int(scancode), GLFW.Action(rawValue: Int(action)) ?? .unknown, GLFW.Modifier(rawValue: Int(mods)) ?? .none)
+            window.keyCallback!(window, GLFW.Key(rawValue: Int(key)) ?? .unknown, Int(scancode), GLFW.Action(rawValue: Int(action)) ?? .unknown, GLFW.Modifier(rawValue: Int(mods)))
         })
     }
     
