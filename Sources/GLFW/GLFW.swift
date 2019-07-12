@@ -2,6 +2,10 @@ import cglfw
 
 public struct GLFW {
     
+    enum WindowHint : Int32 {
+        case clientApi = 0x00022001
+    }
+    
     public static var version : String = {
        
         var major : Int32 = 0
