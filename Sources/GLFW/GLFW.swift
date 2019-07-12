@@ -9,14 +9,20 @@ public struct GLFW {
         case repeated = 2
     }
     
-    public enum Modifier : Int {
-        case none = 0
-        case shift = 0x0001
-        case control = 0x0002
-        case alt = 0x0004
-        case `super` = 0x0008
-        case capsLock = 0x0010
-        case numLock = 0x0020
+    public struct Modifier : OptionSet {
+        public let rawValue: Int
+        
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
+        
+        static let none = Modifier(rawValue: 0)
+        static let shift = Modifier(rawValue: 0x0001)
+        static let control = Modifier(rawValue: 0x0002)
+        static let alt = Modifier(rawValue: 0x0004)
+        static let `super` = Modifier(rawValue: 0x0008)
+        static let capsLock = Modifier(rawValue: 0x0010)
+        static let numLock = Modifier(rawValue: 0x0020)
     }
     
     public enum Key : Int {
