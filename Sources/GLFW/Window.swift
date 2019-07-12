@@ -65,8 +65,12 @@ public class Window {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+
         
         opaque = glfwCreateWindow(Int32(width), Int32(height), title, monitor?.opaque, nil)
+        glfwMakeContextCurrent(window);
+        glfwSwapInterval(1);
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
     }
