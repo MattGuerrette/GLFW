@@ -45,6 +45,10 @@ public class Window {
         glfwSetWindowShouldClose(opaque, true.int32Value())
     }
     
+    public func swapBuffers() {
+        glfwSwapBuffers(opaque)
+    }
+    
     /// Initializes a window
     /// - Parameter title: window title
     /// - Parameter width: window width in pixels
