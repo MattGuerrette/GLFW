@@ -2,6 +2,7 @@ import cglfw
 
 public struct GLFW {
 
+    /// version string of GLFW being used
     public static var version : String = {
        
         var major : Int32 = 0
@@ -11,25 +12,28 @@ public struct GLFW {
         
         return "\(major).\(minor).\(revision)"
     }()
-    
+
+    /// Initializes GLFW
     public static func initialize() {
         if glfwInit() != GLFW_TRUE {
             fatalError("Failed to initialize GLFW")
         }
     }
-    
+
+    /// Terminates GLFW
     public static func terminate() {
         glfwTerminate()
     }
-    
+
+    /// Polls for input events
     public static func pollEvents() {
         glfwPollEvents()
     }
-    
-    public static func windowHint(hint : Int, value : Int) {
+
+    public static func windowHint(_ hint : Int, _ value : Int) {
         glfwWindowHint(Int32(hint), Int32(value))
     }
-    
+
     public static func setErrorCallback(completion: @escaping (_ error : Int, _ description : String?) -> ()) {
         // Store user specified handler in global
         ErrorHandler.shared().handler = completion

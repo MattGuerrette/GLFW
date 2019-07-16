@@ -8,6 +8,24 @@
 import Foundation
 import cglfw
 
+public struct VideoMode {
+    public let width : Int
+    public let height : Int
+    public let redBits : Int
+    public let greenBits : Int
+    public let blueBits : Int
+    public let refreshRate : Int
+
+    init(_ mode : GLFWvidmode) {
+        self.width = Int(mode.width)
+        self.height = Int(mode.height)
+        self.redBits = Int(mode.redBits)
+        self.greenBits = Int(mode.greenBits)
+        self.blueBits = Int(mode.blueBits)
+        self.refreshRate = Int(mode.refreshRate)
+    }
+}
+
 public class Monitor {
     
     let opaque : OpaquePointer?
@@ -19,6 +37,20 @@ public class Monitor {
             }
             
             return String.init(cString: glfwGetMonitorName(opaque))
+        }
+    }
+
+    public var videoModes : [VideoMode] {
+        get {
+            var modes = [VideoMode]()
+
+            var count : Int32 = 0
+            let _modes = glfwGetVideoModes(opaque, &count)
+            for mode in UnsafeBufferPointer<GLFWvidmode>(start: _modes, count: Int(count)) {
+                modes.append(VideoMode.init(mode))
+            }
+
+            return modes
         }
     }
     
