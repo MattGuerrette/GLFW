@@ -33,7 +33,6 @@
   <component name="ChangeListManager">
     <list default="true" id="49ecff21-8a1b-49be-be5c-245982302399" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Sources/GLFW/GLFW.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/GLFW/GLFW.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sources/GLFW/Monitor.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Sources/GLFW/Monitor.swift" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -105,8 +104,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Sources/GLFW/GLFW.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="77" column="4" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
+            <state relative-caret-position="361">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
             </state>
           </provider>
         </entry>
@@ -229,18 +228,18 @@
       <workItem from="1562782504952" duration="168000" />
       <workItem from="1562800862238" duration="1465000" />
       <workItem from="1562873584274" duration="2538000" />
-      <workItem from="1563284805353" duration="8261000" />
+      <workItem from="1563284805353" duration="8595000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12393000" />
+    <option name="totallyTimeSpent" value="12727000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1457" height="1413" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28915662" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28915662" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -255,7 +254,7 @@
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3292402" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.3706591" side_tool="true" visible="true" weight="0.2460815" />
       <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info active="true" anchor="bottom" id="Build" order="12" sideWeight="0.6293409" visible="true" weight="0.2460815" />
+      <window_info anchor="bottom" id="Build" order="12" sideWeight="0.6293409" visible="true" weight="0.2460815" />
       <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -276,16 +275,6 @@
           <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
           <folding>
             <element signature="e#42#104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/GLFW/Monitor.swift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1064">
-          <caret line="56" column="38" lean-forward="true" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
-          <folding>
-            <element signature="e#75#92#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -314,10 +303,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/GLFW/Monitor.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1064">
+          <caret line="56" column="38" lean-forward="true" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+          <folding>
+            <element signature="e#75#92#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Sources/GLFW/GLFW.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="77" column="4" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
+        <state relative-caret-position="361">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
         </state>
       </provider>
     </entry>

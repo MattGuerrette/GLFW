@@ -34,8 +34,8 @@ public struct GLFW {
         glfwWindowHint(Int32(hint), Int32(value))
     }
 
-    public static func windowHint(_ hint : WindowHint, _ value : Int) {
-        glfwWindowHint(Int32(hint.rawValue), Int32(value))
+    public static func windowHint(_ hint : WindowHint, _ value : Bool) {
+        glfwWindowHint(Int32(hint.rawValue), value.int32Value())
     }
 
     public static func setErrorCallback(completion: @escaping (_ error : Int, _ description : String?) -> ()) {
@@ -74,13 +74,13 @@ fileprivate class ErrorHandler {
     }
 }
 
-public extension Bool {
+extension Bool {
     func int32Value() -> Int32 {
-        if self {
-            return 1
-        } else {
-            return 0
-        }
+        return self ? 1 : 0
+    }
+
+    func intValue() -> Int {
+        return self ? 1 : 0
     }
 }
 
