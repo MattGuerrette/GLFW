@@ -30,12 +30,24 @@ public struct GLFW {
         glfwPollEvents()
     }
 
-    public static func windowHint(_ hint : Int, _ value : Int) {
-        glfwWindowHint(Int32(hint), Int32(value))
-    }
-
     public static func windowHint(_ hint : WindowHint, _ value : Bool) {
         glfwWindowHint(Int32(hint.rawValue), value.int32Value())
+    }
+
+    public static func frameBufferHint(_ hint : FrameBufferHint, _ value : Bool) {
+        glfwWindowHint(Int32(hint.rawValue), value.int32Value())
+    }
+
+    public static func frameBufferHint(_ hint : FrameBufferHint, _ value : Int) {
+        glfwWindowHint(Int32(hint.rawValue), Int32(value))
+    }
+
+    public static func contextHint(_ hint : ContextHint, _ value : Int) {
+        glfwWindowHint(Int32(hint.rawValue), Int32(value))
+    }
+
+    public static func contextHint(_ hint : ContextHint, _ value : ContextHintValue) {
+        glfwWindowHint(Int32(hint.rawValue), Int32(value.rawValue))
     }
 
     public static func setErrorCallback(completion: @escaping (_ error : Int, _ description : String?) -> ()) {
@@ -86,7 +98,18 @@ extension Bool {
 
 
 extension GLFW {
-    
+
+    public enum ContextHintValue : Int {
+        case none = 0
+        case openGL = 0x00030001
+        case openGLES = 0x00030002
+    }
+
+    public enum ContextHint : Int {
+        case clientApi = 0x00022001
+        case creationApi = 0x0002200B
+    }
+
     public enum WindowHint : Int {
         case resizable = 0x00020003
         case visible = 0x00020004
@@ -99,6 +122,28 @@ extension GLFW {
         case transparentFramebuffer = 0x0002000A
         case focusOnShow = 0x0002000C
         case scaleToMonitor = 0x0002200C
+    }
+
+    public enum FrameBufferHint : Int {
+        case redBits = 0x00021001
+        case greenBits = 0x00021002
+        case blueBits = 0x00021003
+        case alphaBits = 0x00021004
+        case depthBits = 0x00021005
+        case stencilBits = 0x00021006
+        case accumRedBits = 0x00021007
+        case accumGreenBits = 0x00021008
+        case accumBlueBits = 0x00021009
+        case accumAlphaBits = 0x0002100A
+        case auxBuffers = 0x0002100B
+        case stereo = 0x0002100C
+        case samples = 0x0002100D
+        case sRGBCapable = 0x0002100E
+        case doubleBuffer = 0x00021010
+    }
+
+    public enum MonitorHint : Int {
+        case refreshRate = 0x0002100F
     }
     
     public enum Action : Int {
