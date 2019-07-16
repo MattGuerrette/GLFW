@@ -20,6 +20,10 @@ public struct GLFW {
         }
     }
 
+    public static func isVulkanSupported() -> Bool {
+        return glfwVulkanSupported() != GLFW_FALSE
+    }
+
     /// Terminates GLFW
     public static func terminate() {
         glfwTerminate()
