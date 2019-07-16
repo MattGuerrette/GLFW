@@ -50,6 +50,22 @@ public struct GLFW {
         glfwWindowHint(Int32(hint.rawValue), Int32(value.rawValue))
     }
 
+    public static func getRequiredExtensions() -> [String] {
+        var extCount : UInt32 = 0
+        glfwGetRequiredInstanceExtensions(&extCount)
+
+        let extensions = glfwGetRequiredInstanceExtensions(&extCount)
+        var result = [String]()
+        for name in UnsafeBufferPointer(start: extensions, count: Int(extCount)) {
+            if let n = name {
+                let str = String.init(cString: n)
+                result.append(str)
+            }
+        }
+
+        return result
+    }
+
     public static func setErrorCallback(completion: @escaping (_ error : Int, _ description : String?) -> ()) {
         // Store user specified handler in global
         ErrorHandler.shared().handler = completion
