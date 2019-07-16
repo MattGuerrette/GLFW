@@ -54,6 +54,24 @@ public class Monitor {
         }
     }
 
+    public var contentScaleX : Float {
+        get {
+            var xScale : Float = 0.0
+            glfwGetMonitorContentScale(opaque, &xScale, nil)
+
+            return xScale
+        }
+    }
+
+    public var contentScaleY : Float {
+        get {
+            var yScale : Float = 0.0
+            glfwGetMonitorContentScale(opaque, nil, &yScale)
+
+            return yScale
+        }
+    }
+
     public var videoMode : VideoMode? {
         get {
             guard let mode = glfwGetVideoMode(opaque) else {

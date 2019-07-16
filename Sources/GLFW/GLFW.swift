@@ -34,6 +34,10 @@ public struct GLFW {
         glfwWindowHint(Int32(hint), Int32(value))
     }
 
+    public static func windowHint(_ hint : WindowHint, _ value : Int) {
+        glfwWindowHint(Int32(hint.rawValue), Int32(value))
+    }
+
     public static func setErrorCallback(completion: @escaping (_ error : Int, _ description : String?) -> ()) {
         // Store user specified handler in global
         ErrorHandler.shared().handler = completion
@@ -70,7 +74,7 @@ fileprivate class ErrorHandler {
     }
 }
 
-extension Bool {
+public extension Bool {
     func int32Value() -> Int32 {
         if self {
             return 1
@@ -85,6 +89,16 @@ extension GLFW {
     
     public enum WindowHint : Int {
         case resizable = 0x00020003
+        case visible = 0x00020004
+        case decorated = 0x00020005
+        case focused = 0x00020001
+        case autoIconify = 0x00020006
+        case floating = 0x00020007
+        case maximized = 0x00020008
+        case centerCursor = 0x00020009
+        case transparentFramebuffer = 0x0002000A
+        case focusOnShow = 0x0002000C
+        case scaleToMonitor = 0x0002200C
     }
     
     public enum Action : Int {
