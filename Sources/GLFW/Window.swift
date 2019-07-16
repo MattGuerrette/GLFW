@@ -10,16 +10,20 @@ import cglfw
 
 public class Window {
     
+    /// internal GLFW window handle
     var opaque : OpaquePointer?
     
+    /// handle to user specified key callback closure
     var keyCallback : ((Window, GLFW.Key, Int, GLFW.Action, GLFW.Modifier) -> ())?
 
+    /// the window's cursor
     public var cursor : Cursor? {
         didSet {
             glfwSetCursor(opaque, cursor!.opaque)
         }
     }
     
+    /// Gets the width of window in pixels
     public var width : Int {
         get {
             var w : Int32 = 0
@@ -30,6 +34,7 @@ public class Window {
         }
     }
     
+    /// Gets the height of window in pixels
     public var height : Int {
         get {
             var w : Int32 = 0
@@ -40,6 +45,7 @@ public class Window {
         }
     }
     
+    /// Gets the width of framebuffer in pixels
     public var frameWidth : Int {
         get {
             var w : Int32 = 0
@@ -50,6 +56,7 @@ public class Window {
         }
     }
     
+    /// Gets the height of framebuffer in pixels
     public var frameHeight : Int {
         get {
             var w : Int32 = 0
@@ -81,10 +88,13 @@ public class Window {
         glfwHideWindow(opaque)
     }
     
+    /// Closes the window
     public func close() {
         glfwSetWindowShouldClose(opaque, true.int32Value())
     }
     
+    /// Swaps the internal framebuffers used
+    /// for rendering using OpenGL
     public func swapBuffers() {
         glfwSwapBuffers(opaque)
     }
@@ -102,15 +112,7 @@ public class Window {
             }
         }
         
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-
-        
         opaque = glfwCreateWindow(Int32(width), Int32(height), title, monitor?.opaque, nil)
-        glfwMakeContextCurrent(opaque);
-        glfwSwapInterval(1);
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
     }
@@ -151,28 +153,28 @@ public class Window {
     }
     
     // Window Attributes
-    public var focused : Bool {
-        get {
-            return glfwGetWindowAttrib(opaque, WindowAttribute.focused.rawValue) == GLFW_TRUE
-        }
-        set {
-            glfwSetWindowAttrib(opaque, GLFW_FOCUSED, newValue.int32Value())
-        }
-    }
+//    public var focused : Bool {
+//        get {
+//            return glfwGetWindowAttrib(opaque, WindowAttribute.focused.rawValue) == GLFW_TRUE
+//        }
+//        set {
+//            glfwSetWindowAttrib(opaque, GLFW_FOCUSED, newValue.int32Value())
+//        }
+//    }
 }
 
-public enum WindowAttribute: Int32 {
-    public typealias RawValue = Int32
-    
-    case focused = 0x00020001
-    case iconified = 0x00020002
-    case resizable = 0x00020003
-    case visible = 0x00020004
-    case decorated = 0x00020005
-    case autoIconify = 0x00020006
-    case floating = 0x00020007
-    case maximized = 0x00020008
-    case transparentFramebuffer = 0x0002000A
-    case hovered = 0x0002000B
-    case focusOnShow = 0x0002000C
-}
+//public enum WindowAttribute: Int32 {
+//    public typealias RawValue = Int32
+//    
+//    case focused = 0x00020001
+//    case iconified = 0x00020002
+//    case resizable = 0x00020003
+//    case visible = 0x00020004
+//    case decorated = 0x00020005
+//    case autoIconify = 0x00020006
+//    case floating = 0x00020007
+//    case maximized = 0x00020008
+//    case transparentFramebuffer = 0x0002000A
+//    case hovered = 0x0002000B
+//    case focusOnShow = 0x0002000C
+//}
