@@ -53,6 +53,16 @@ public class Monitor {
             return modes
         }
     }
+
+    public var videoMode : VideoMode? {
+        get {
+            guard let mode = glfwGetVideoMode(opaque) else {
+                return nil
+            }
+
+            return VideoMode.init(mode.pointee)
+        }
+    }
     
     public static var primary : Monitor = {
        return Monitor(glfwGetPrimaryMonitor())
