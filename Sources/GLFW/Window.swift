@@ -93,6 +93,10 @@ public class Window {
         glfwSetWindowShouldClose(opaque, true.int32Value())
     }
     
+    public func centerCursor() {
+        glfwSetCursorPos(opaque, Double(width/2), Double(height/2))
+    }
+    
     /// Swaps the internal framebuffers used
     /// for rendering using OpenGL
     public func swapBuffers() {
