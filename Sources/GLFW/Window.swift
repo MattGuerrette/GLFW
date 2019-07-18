@@ -25,6 +25,9 @@ public class Window {
     /// handle to user specified key callback closure
     var keyCallback : ((Window, GLFW.Key, Int, GLFW.Action, GLFW.Modifier) -> ())?
     
+    /// handle to user specified resize callback closure
+    var resizeCallback : ((Window, Int, Int) -> ())?
+    
     #if os(macOS)
     var layer : CAMetalLayer?
     
@@ -172,7 +175,7 @@ public class Window {
         self.keyCallback = completion
         
         // Register C callback closure
-        glfwSetKeyCallback(opaque, { (win, key, scancode, action, mods) in
+        glfwSetKeyCallback(opaque) { (win, key, scancode, action, mods) in
             
             //Access 'self' registed as user pointer with opaque GLFW window
             guard let userPointer = glfwGetWindowUserPointer(win) else {
@@ -184,7 +187,26 @@ public class Window {
             let window = Unmanaged<Window>.fromOpaque(userPointer).takeUnretainedValue()
             
             window.keyCallback!(window, GLFW.Key(rawValue: Int(key)) ?? .unknown, Int(scancode), GLFW.Action(rawValue: Int(action)) ?? .unknown, GLFW.Modifier(rawValue: Int(mods)))
-        })
+        }
+    }
+    
+    public func setSizeCallback(completion: @escaping (_ window: Window, _ width: Int, _ height: Int) -> ()) {
+        self.resizeCallback = completion
+        
+        // Register C callback closure
+        glfwSetWindowSizeCallback(opaque) { (win, w, h) in
+            //Access 'self' registed as user pointer with opaque GLFW window
+            guard let userPointer = glfwGetWindowUserPointer(win) else {
+                return
+            }
+            
+            //Convert 'Window' class type back from opqeue type
+            //and call user callback
+            let window = Unmanaged<Window>.fromOpaque(userPointer).takeUnretainedValue()
+            
+            window.resizeCallback!(window, Int(w), Int(h))
+        }
+        
     }
     
     // Window Attributes
