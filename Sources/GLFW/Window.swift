@@ -20,10 +20,20 @@ public class Window {
     }
     
     /// internal GLFW window handle
-    var opaque : OpaquePointer?
+    var opaque : OpaquePointer? = nil
     
     /// handle to user specified key callback closure
     var keyCallback : ((Window, GLFW.Key, Int, GLFW.Action, GLFW.Modifier) -> ())?
+    
+    #if os(macOS)
+    var layer : CAMetalLayer?
+    
+    public var metalLayer : CAMetalLayer? {
+        get {
+            return layer
+        }
+    }
+    #endif
 
     /// the window's cursor
     public var cursor : Cursor? {
@@ -132,10 +142,10 @@ public class Window {
 #if os(macOS)
         if glfwGetWindowAttrib(opaque, GLFW_CLIENT_API) == GLFW_NO_API {
             let window = glfwGetCocoaWindow(opaque) as! NSWindow
-            let metalLayer = CAMetalLayer()
-            metalLayer.device = MTLCreateSystemDefaultDevice()
-            metalLayer.pixelFormat = .bgra8Unorm
-            window.contentView!.layer = metalLayer
+            self.layer = CAMetalLayer()
+            layer!.device = MTLCreateSystemDefaultDevice()
+            layer!.pixelFormat = .bgra8Unorm
+            window.contentView!.layer = layer
             window.contentView!.wantsLayer = true
         }
 #endif
@@ -147,6 +157,7 @@ public class Window {
         self.opaque = opaque
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
+        
     }
     
     /// Deinitialize and destroy window
