@@ -7,6 +7,9 @@
 
 import cglfw
 
+#if os(macOS)
+import AppKit
+#endif
 
 public class Window {
     
@@ -125,6 +128,17 @@ public class Window {
         opaque = glfwCreateWindow(Int32(width), Int32(height), title, monitor?.opaque, nil)
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
+    
+#if os(macOS)
+        if glfwGetWindowAttrib(opaque, GLFW_CLIENT_API) == GLFW_NO_API {
+            let window = glfwGetCocoaWindow(opaque) as! NSWindow
+            let metalLayer = CAMetalLayer()
+            metalLayer.device = MTLCreateSystemDefaultDevice()
+            metalLayer.pixelFormat = .bgra8Unorm
+            window.contentView!.layer = metalLayer
+            window.contentView!.wantsLayer = true
+        }
+#endif
     }
     
     /// Initializes a window from opaque GLFW type
