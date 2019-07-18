@@ -10,6 +10,12 @@ import cglfw
 
 public class Window {
     
+    public enum CursorMode : Int {
+        case normal = 0x00034001
+        case hidden = 0x00034002
+        case disabled = 0x00034003
+    }
+    
     /// internal GLFW window handle
     var opaque : OpaquePointer?
     
@@ -93,8 +99,8 @@ public class Window {
         glfwSetWindowShouldClose(opaque, true.int32Value())
     }
     
-    public func centerCursor() {
-        glfwSetCursorPos(opaque, Double(width/2), Double(height/2))
+    public func setCursorMode(_ mode : CursorMode) {
+        glfwSetInputMode(opaque, GLFW_CURSOR, Int32(mode.rawValue))
     }
     
     /// Swaps the internal framebuffers used
