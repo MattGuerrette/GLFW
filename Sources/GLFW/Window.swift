@@ -146,6 +146,7 @@ public class Window {
         if glfwGetWindowAttrib(opaque, GLFW_CLIENT_API) == GLFW_NO_API {
             let window = glfwGetCocoaWindow(opaque) as! NSWindow
             self.layer = CAMetalLayer()
+            self.layer?.drawableSize = CGSize(width: frameWidth, height: frameHeight)
             layer!.device = MTLCreateSystemDefaultDevice()
             layer!.pixelFormat = .bgra8Unorm
             window.contentView!.layer = layer
