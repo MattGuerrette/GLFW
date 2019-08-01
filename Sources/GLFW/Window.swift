@@ -29,9 +29,13 @@ public class Window {
     /// handle to user specified resize callback closure
     var resizeCallback : ((Window, Int, Int) -> ())?
     
+    /// handle to user specified draw callback
+    var drawCallback: (()->())?
+    
     #if os(macOS)
     /// Metal layer
     var layer : CAMetalLayer?
+    var displayLink : CVDisplayLink?
     
     
     /// Gets the window's associated Metal layer
@@ -163,6 +167,25 @@ public class Window {
             window.contentView!.layer = layer
             window.contentView!.wantsLayer = true
         }
+        
+        let displayCallback: CVDisplayLinkOutputCallback = {
+            (displayLink: CVDisplayLink, inNow: UnsafePointer<CVTimeStamp>, inOutputTime: UnsafePointer<CVTimeStamp>, flagsIn: CVOptionFlags, flagsOut: UnsafeMutablePointer<CVOptionFlags>, displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn in
+            
+            DispatchQueue.main.sync {
+                let window = unsafeBitCast(displayLinkContext, to: Window.self)
+                if let callback = window.drawCallback {
+                    callback()
+                }
+//                let nativeWindow = glfwGetCocoaWindow(window.opaque) as! NSWindow
+//                nativeWindow.contentView!.needsDisplay = true
+            }
+            
+            return kCVReturnSuccess
+        }
+        
+        CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
+        CVDisplayLinkSetOutputCallback(displayLink!, displayCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
+        CVDisplayLinkStart(displayLink!)
 #endif
     }
     
@@ -200,6 +223,10 @@ public class Window {
             
             window.keyCallback!(window, GLFW.Key(rawValue: Int(key)) ?? .unknown, Int(scancode), GLFW.Action(rawValue: Int(action)) ?? .unknown, GLFW.Modifier(rawValue: Int(mods)))
         }
+    }
+    
+    public func setDrawCallback(completion: @escaping ()->()) {
+        drawCallback = completion
     }
     
     /// Sets the size callback for responding to change in window size
