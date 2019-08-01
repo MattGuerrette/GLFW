@@ -37,7 +37,7 @@ public class Window {
     #if os(macOS)
     /// Metal layer
     var layer : CAMetalLayer?
-    var displayLink : CVDisplayLink?
+    //var displayLink : CVDisplayLink?
     
     
     /// Gets the window's associated Metal layer
@@ -170,31 +170,31 @@ public class Window {
             window.contentView!.wantsLayer = true
         }
         
-        let displayCallback: CVDisplayLinkOutputCallback = {
-            (displayLink: CVDisplayLink, inNow: UnsafePointer<CVTimeStamp>, inOutputTime: UnsafePointer<CVTimeStamp>, flagsIn: CVOptionFlags, flagsOut: UnsafeMutablePointer<CVOptionFlags>, displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn in
-            
-            DispatchQueue.main.sync {
-                let window = unsafeBitCast(displayLinkContext, to: Window.self)
-                if let callback = window.drawCallback {
-                    callback()
-                }
-                
-                window.counter += 1
-                if window.counter >= 60 {
-                    print("\(window.counter)")
-                    window.counter = 0
-                }
-//                let nativeWindow = glfwGetCocoaWindow(window.opaque) as! NSWindow
-//                nativeWindow.contentView!.needsDisplay = true
-            }
-            
-            
-            return kCVReturnSuccess
-        }
-        
-        CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
-        CVDisplayLinkSetOutputCallback(displayLink!, displayCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
-        CVDisplayLinkStart(displayLink!)
+//        let displayCallback: CVDisplayLinkOutputCallback = {
+//            (displayLink: CVDisplayLink, inNow: UnsafePointer<CVTimeStamp>, inOutputTime: UnsafePointer<CVTimeStamp>, flagsIn: CVOptionFlags, flagsOut: UnsafeMutablePointer<CVOptionFlags>, displayLinkContext: UnsafeMutableRawPointer?) -> CVReturn in
+//
+//            DispatchQueue.main.sync {
+//                let window = unsafeBitCast(displayLinkContext, to: Window.self)
+//                if let callback = window.drawCallback {
+//                    callback()
+//                }
+//
+//                window.counter += 1
+//                if window.counter >= 60 {
+//                    print("\(window.counter)")
+//                    window.counter = 0
+//                }
+////                let nativeWindow = glfwGetCocoaWindow(window.opaque) as! NSWindow
+////                nativeWindow.contentView!.needsDisplay = true
+//            }
+//
+//
+//            return kCVReturnSuccess
+//        }
+//
+//        CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
+//        CVDisplayLinkSetOutputCallback(displayLink!, displayCallback, UnsafeMutableRawPointer(Unmanaged.passUnretained(self).toOpaque()))
+//        CVDisplayLinkStart(displayLink!)
 #endif
     }
     
