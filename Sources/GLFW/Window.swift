@@ -32,6 +32,8 @@ public class Window {
     /// handle to user specified draw callback
     var drawCallback: (()->())?
     
+    var counter = 0
+    
     #if os(macOS)
     /// Metal layer
     var layer : CAMetalLayer?
@@ -176,9 +178,16 @@ public class Window {
                 if let callback = window.drawCallback {
                     callback()
                 }
+                
+                window.counter += 1
+                if window.counter >= 60 {
+                    print("\(window.counter)")
+                    window.counter = 0
+                }
 //                let nativeWindow = glfwGetCocoaWindow(window.opaque) as! NSWindow
 //                nativeWindow.contentView!.needsDisplay = true
             }
+            
             
             return kCVReturnSuccess
         }
