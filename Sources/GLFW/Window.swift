@@ -13,6 +13,7 @@ import AppKit
 
 public class Window {
     
+    /// Window cursor mode
     public enum CursorMode : Int {
         case normal = 0x00034001
         case hidden = 0x00034002
@@ -29,8 +30,11 @@ public class Window {
     var resizeCallback : ((Window, Int, Int) -> ())?
     
     #if os(macOS)
+    /// Metal layer
     var layer : CAMetalLayer?
     
+    
+    /// Gets the window's associated Metal layer
     public var metalLayer : CAMetalLayer? {
         get {
             return layer
@@ -115,6 +119,8 @@ public class Window {
         glfwSetWindowShouldClose(opaque, true.int32Value())
     }
     
+    /// Sets the cursor mode
+    /// - Parameter mode: cursor mode
     public func setCursorMode(_ mode : CursorMode) {
         glfwSetInputMode(opaque, GLFW_CURSOR, Int32(mode.rawValue))
     }
@@ -142,13 +148,18 @@ public class Window {
         
         glfwSetWindowUserPointer(opaque, Unmanaged.passUnretained(self).toOpaque())
     
+        // For macOS, if user requested no client api create a Metal backed layer
+        // for window to rendering using Metal API. This is equivalent in functionality
+        // to using Vulkan for Windows and Linux
 #if os(macOS)
         if glfwGetWindowAttrib(opaque, GLFW_CLIENT_API) == GLFW_NO_API {
             let window = glfwGetCocoaWindow(opaque) as! NSWindow
             self.layer = CAMetalLayer()
+            //make sure to update drawable size to match the frame buffer size.
+            //otherwise, aliasing may occur
             self.layer?.drawableSize = CGSize(width: frameWidth, height: frameHeight)
             layer!.device = MTLCreateSystemDefaultDevice()
-            layer!.pixelFormat = .bgra8Unorm
+            layer!.pixelFormat = .bgra8Unorm_srgb
             window.contentView!.layer = layer
             window.contentView!.wantsLayer = true
         }
@@ -191,6 +202,8 @@ public class Window {
         }
     }
     
+    /// Sets the size callback for responding to change in window size
+    /// - Parameter completion: callback handler
     public func setSizeCallback(completion: @escaping (_ window: Window, _ width: Int, _ height: Int) -> ()) {
         self.resizeCallback = completion
         
@@ -209,30 +222,4 @@ public class Window {
         }
         
     }
-    
-    // Window Attributes
-//    public var focused : Bool {
-//        get {
-//            return glfwGetWindowAttrib(opaque, WindowAttribute.focused.rawValue) == GLFW_TRUE
-//        }
-//        set {
-//            glfwSetWindowAttrib(opaque, GLFW_FOCUSED, newValue.int32Value())
-//        }
-//    }
 }
-
-//public enum WindowAttribute: Int32 {
-//    public typealias RawValue = Int32
-//    
-//    case focused = 0x00020001
-//    case iconified = 0x00020002
-//    case resizable = 0x00020003
-//    case visible = 0x00020004
-//    case decorated = 0x00020005
-//    case autoIconify = 0x00020006
-//    case floating = 0x00020007
-//    case maximized = 0x00020008
-//    case transparentFramebuffer = 0x0002000A
-//    case hovered = 0x0002000B
-//    case focusOnShow = 0x0002000C
-//}

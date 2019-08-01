@@ -15,7 +15,6 @@ public class Cursor {
     }
 
     deinit {
-        print("Destroyed cursor")
         glfwDestroyCursor(opaque)
     }
 
