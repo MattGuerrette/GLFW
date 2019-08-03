@@ -72,11 +72,21 @@ public struct GLFW {
 
     public static func setErrorCallback(completion: @escaping (_ error : Int, _ description : String?) -> ()) {
         // Store user specified handler in global
-        ErrorHandler.shared().handler = completion
+        ErrorHandler.shared().callback = completion
         
         // Register C callback closer and call internal handler
         glfwSetErrorCallback { (error, description) in
             ErrorHandler.errorHandler(error, description)
+        }
+    }
+    
+    public static func setMonitorCallback(completion: @escaping (_ monitor: Monitor?, _ event: Int) -> ()) {
+        
+        MonitorHandler.shared().callback = completion
+        
+        // Register C callback closure
+        glfwSetMonitorCallback { (monitor:OpaquePointer?, event:Int32) in
+            MonitorHandler.monitorHandler(monitor, event)
         }
     }
 }
@@ -87,22 +97,43 @@ fileprivate class ErrorHandler {
         return handler
     }()
     
-    var handler : ((Int, String?) -> ())?
+    var callback : ((Int, String?) -> ())?
     
     class func shared() -> ErrorHandler {
         return sharedHandler
     }
     
     class func errorHandler(_ error: Int32, _ description: UnsafePointer<Int8>?) {
-        guard let handler = ErrorHandler.shared().handler else {
+        guard let callback = ErrorHandler.shared().callback else {
             return
         }
         
         if let desc = description {
-            handler(Int(error), String.init(cString: desc))
+            callback(Int(error), String.init(cString: desc))
         } else {
-            handler(Int(error), nil)
+            callback(Int(error), nil)
         }
+    }
+}
+
+fileprivate class MonitorHandler {
+    private static var sharedHandler: MonitorHandler = {
+        let handler = MonitorHandler()
+        return handler
+    }()
+    
+    var callback: ((Monitor?, Int) -> ())?
+    
+    class func shared() -> MonitorHandler {
+        return sharedHandler
+    }
+    
+    class func monitorHandler(_ monitor: OpaquePointer?, _ event: Int32) {
+        guard let callback = MonitorHandler.shared().callback else {
+            return
+        }
+        
+        callback(Monitor(monitor), Int(event))
     }
 }
 

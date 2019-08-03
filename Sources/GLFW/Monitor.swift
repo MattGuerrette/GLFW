@@ -86,6 +86,8 @@ public class Monitor {
        return Monitor(glfwGetPrimaryMonitor())
     }()
     
+    
+    
     init(_ opaque: OpaquePointer?) {
         self.opaque = opaque
     }
